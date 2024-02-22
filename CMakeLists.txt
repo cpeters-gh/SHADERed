@@ -1,4 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
+include("C:/Program Files/CMake/share/cmake-3.28/Modules/CMakePrintHelpers.cmake")
+cmake_print_variables(CMAKE_PREFIX_PATH)
+list(APPEND CMAKE_PREFIX_PATH "C:/Users/phile/Documents/programming/github/vcpkg/vcpkg/packages/sdl2_x64-windows/share/sdl2")
+list(APPEND CMAKE_PREFIX_PATH "C:/Users/phile/Documents/programming/github/vcpkg/vcpkg/buildtrees/glm/src/1.0.0-0877080849")
+cmake_print_variables(CMAKE_PREFIX_PATH)
+
 set(CMAKE_CXX_STANDARD 17)
 project(SHADERed)
 
@@ -155,12 +161,6 @@ set(OpenGL_GL_PREFERENCE GLVND CACHE STRING "Linux only: if GLVND, use the vendo
 set_property(CACHE OpenGL_GL_PREFERENCE PROPERTY STRINGS GLVND LEGACY)
 find_package(OpenGL REQUIRED)
 
-# glew
-find_package(GLEW REQUIRED)
-
-# glm
-find_package(GLM REQUIRED)
-
 # SpvGenTwo
 add_subdirectory(libs/SpvGenTwo)
 
@@ -215,7 +215,7 @@ target_link_libraries(SHADERed ${OPENGL_LIBRARIES} ${GLM_LIBRARY_DIRS} glslang S
 
 if(WIN32)
 	# link specific win32 libraries
-	target_link_libraries(SHADERed GLEW::GLEW SDL2::SDL2 SDL2::SDL2main)
+	target_link_libraries(SHADERed SDL2::SDL2 SDL2::SDL2main)
 
 elseif(UNIX AND NOT APPLE)
 	# link linux libraries
