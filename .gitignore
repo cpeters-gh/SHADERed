@@ -217,3 +217,4 @@ x64/Debug/ZERO_CHECK/ZERO_CHECK.tlog/CustomBuild.read.1.tlog
 x64/Debug/ZERO_CHECK/ZERO_CHECK.tlog/CustomBuild.write.1.tlog
 x64/Debug/ZERO_CHECK/ZERO_CHECK.tlog/ZERO_CHECK.lastbuildstate
 ZERO_CHECK.vcxproj
+libs/assimp
