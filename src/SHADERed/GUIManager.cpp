@@ -37,8 +37,8 @@
 #include <SHADERed/UI/ProfilerUI.h>
 #include <SHADERed/UI/FrameAnalysisUI.h>
 #include <SHADERed/UI/UIHelper.h>
-#include <imgui/examples/imgui_impl_opengl3.h>
-#include <imgui/examples/imgui_impl_sdl.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <imgui/backends/imgui_impl_sdl2.h>
 #include <imgui/imgui.h>
 #include <misc/ImFileDialog.h>
 
@@ -146,7 +146,8 @@ namespace ed {
 		ImGuiIO& io = ImGui::GetIO();
 		io.Fonts->AddFontDefault();
 		io.IniFilename = m_uiIniFile.c_str();
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable /*| ImGuiConfigFlags_ViewportsEnable TODO: allow this on windows? test on linux?*/;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable;// /*| ImGuiConfigFlags_ViewportsEnable TODO: allow this on windows? test on linux?*/
+		;
 		io.ConfigDockingWithShift = false;
 
 		if (!ed::Settings::Instance().LinuxHomeDirectory.empty()) {
@@ -497,7 +498,7 @@ namespace ed {
 
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame(m_wnd);
+		ImGui_ImplSDL2_NewFrame(/*CRAIG m_wnd*/);
 		ImGui::NewFrame();
 
 		// splash screen
@@ -533,7 +534,6 @@ namespace ed {
 			ImGuiID dockspace_id = ImGui::GetID("DockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 		}
-
 		// rebuild
 		if (((CodeEditorUI*)Get(ViewID::Code))->TrackedFilesNeedUpdate()) {
 			if (!m_recompiledAll) {

@@ -220,7 +220,7 @@ namespace ed {
 						ImGui::Text("New buffer size (in bytes):");
 						ImGui::SameLine();
 						ImGui::PushItemWidth(200);
-						ImGui::InputInt("##objprev_newsize", &m_cachedBufSize[i], 1, 10, ImGuiInputTextFlags_AlwaysInsertMode);
+						ImGui::InputInt("##objprev_newsize", &m_cachedBufSize[i], 1, 10, ImGuiInputTextFlags_AlwaysOverwrite);
 						ImGui::PopItemWidth();
 						ImGui::SameLine();
 						if (ImGui::Button("APPLY##objprev_applysize")) {

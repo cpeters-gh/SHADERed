@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <Windows.h>
 
 namespace ed {
 	void Logger::Log(const std::string& msg, bool error, const std::string& file, int line)
@@ -40,10 +41,13 @@ namespace ed {
 			data << "(ERROR) ";
 
 		// message
-		data << msg;
+		data << msg << std::endl;
 
 		if (Settings::Instance().General.PipeLogsToTerminal)
+		{
 			std::cout << data.str() << std::endl;
+			OutputDebugString(data.str().c_str());
+		}
 
 		if (Settings::Instance().General.StreamLogs) {
 			std::ofstream log(ed::Settings::Instance().ConvertPath("log.txt"), std::ios_base::app | std::ios_base::out);

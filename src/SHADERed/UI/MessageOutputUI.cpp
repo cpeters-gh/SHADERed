@@ -13,12 +13,12 @@ namespace ed {
 	{
 		const std::vector<MessageStack::Message>& msgs = m_data->Messages.GetMessages();
 
-		if (ImGui::BeginTable("##msg_table", 4, ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollFreezeTopRow | ImGuiTableFlags_ScrollY)) {
+		if (ImGui::BeginTable("##msg_table", 4, ImGuiTableFlags_Resizable | /* CRAIG ImGuiTableFlags_ScrollFreezeTopRow | */ImGuiTableFlags_ScrollY)) {
 			ImGui::TableSetupColumn("Shader Pass", ImGuiTableColumnFlags_WidthFixed, 120.0f);
 			ImGui::TableSetupColumn("Source", ImGuiTableColumnFlags_WidthFixed, 120.0f);
 			ImGui::TableSetupColumn("Line", ImGuiTableColumnFlags_WidthFixed, 120.0f);
 			ImGui::TableSetupColumn("Message", ImGuiTableColumnFlags_WidthStretch);
-			ImGui::TableAutoHeaders();
+			// CRAIG ImGui::TableAutoHeaders();
 
 			int rowIndex = 0;
 			const ed::CustomColors& clrs = ThemeContainer::Instance().GetCustomStyle(Settings::Instance().Theme);

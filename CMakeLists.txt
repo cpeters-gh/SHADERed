@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-include("C:/Program Files/CMake/share/cmake-3.28/Modules/CMakePrintHelpers.cmake")
-cmake_print_variables(CMAKE_PREFIX_PATH)
 list(APPEND CMAKE_PREFIX_PATH "C:/Users/phile/Documents/programming/github/vcpkg/vcpkg/packages/sdl2_x64-windows/share/sdl2")
-list(APPEND CMAKE_PREFIX_PATH "C:/Users/phile/Documents/programming/github/vcpkg/vcpkg/buildtrees/glm/src/1.0.0-0877080849")
-cmake_print_variables(CMAKE_PREFIX_PATH)
 
 set(CMAKE_CXX_STANDARD 17)
 project(SHADERed)
@@ -102,9 +98,10 @@ set(SOURCES
 	libs/ImGuiColorTextEdit/TextEditor.cpp
 	libs/imgui/imgui_draw.cpp
 	libs/imgui/imgui_widgets.cpp
+	libs/imgui/imgui_tables.cpp
 	libs/imgui/imgui.cpp
-	libs/imgui/examples/imgui_impl_opengl3.cpp
-	libs/imgui/examples/imgui_impl_sdl.cpp
+	libs/imgui/backends/imgui_impl_opengl3.cpp
+	libs/imgui/backends/imgui_impl_sdl2.cpp
 	libs/SPIRVCross/spirv_cfg.cpp
 	libs/SPIRVCross/spirv_cross.cpp
 	libs/SPIRVCross/spirv_cross_util.cpp

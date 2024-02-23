@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace ed {
-	int HistoryCallback(ImGuiTextEditCallbackData* data)
+	int HistoryCallback(ImGuiInputTextCallbackData* data)
 	{
 		HistoryData* history = (HistoryData*)data->UserData;
 

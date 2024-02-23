@@ -57,8 +57,9 @@ namespace ifd {
 			opened = *p_opened = !*p_opened;
 			clicked = false;
 		}
+		ImGuiContext* ctx = ImGui::GetCurrentContext();
 		if (hovered || active)
-			window->DrawList->AddRectFilled(window->DC.LastItemRect.Min, window->DC.LastItemRect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : ImGuiCol_HeaderHovered]));
+			window->DrawList->AddRectFilled(ctx->LastItemData.Rect.Min, ctx->LastItemData.Rect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : ImGuiCol_HeaderHovered]));
 		
 		// Icon, text
 		float icon_posX = pos.x + g.FontSize + g.Style.FramePadding.y;
@@ -80,8 +81,9 @@ namespace ifd {
 
 		bool hovered = ImGui::IsItemHovered();
 		bool active = ImGui::IsItemActive();
+		ImGuiContext* ctx = ImGui::GetCurrentContext();
 		if (hovered || active)
-			window->DrawList->AddRectFilled(window->DC.LastItemRect.Min, window->DC.LastItemRect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : ImGuiCol_HeaderHovered]));
+			window->DrawList->AddRectFilled(ctx->LastItemData.Rect.Min, ctx->LastItemData.Rect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : ImGuiCol_HeaderHovered]));
 
 		// Icon, text
 		window->DrawList->AddImage(icon, ImVec2(pos.x, pos.y), ImVec2(pos.x + ICON_SIZE, pos.y + ICON_SIZE));
@@ -230,7 +232,8 @@ namespace ifd {
 		bool hovered = ImGui::IsItemHovered();
 		bool active = ImGui::IsItemActive();
 
-		float size = window->DC.LastItemRect.Max.x - window->DC.LastItemRect.Min.x;
+		ImGuiContext* ctx = ImGui::GetCurrentContext();
+		float size = ctx->LastItemData.Rect.Max.x - ctx->LastItemData.Rect.Min.x;
 
 		int numPoints = 5;
 		float innerRadius = size / 4;
@@ -298,9 +301,9 @@ namespace ifd {
 		float iconPosX = pos.x + (size.x - iconSize) / 2.0f;
 		ImVec2 textSize = ImGui::CalcTextSize(label, 0, true, size.x);
 
-		
+		ImGuiContext* ctx = ImGui::GetCurrentContext();
 		if (hovered || active || isSelected)
-			window->DrawList->AddRectFilled(window->DC.LastItemRect.Min, window->DC.LastItemRect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : (isSelected ? ImGuiCol_Header : ImGuiCol_HeaderHovered)]));
+			window->DrawList->AddRectFilled(ctx->LastItemData.Rect.Min, ctx->LastItemData.Rect.Max, ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[active ? ImGuiCol_HeaderActive : (isSelected ? ImGuiCol_Header : ImGuiCol_HeaderHovered)]));
 
 		if (hasPreview) {
 			ImVec2 availSize = ImVec2(size.x, iconSize);
@@ -1099,12 +1102,12 @@ namespace ifd {
 				ImGui::TableSetupColumn("Size##filesize", ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoResize, 0.0f, 2);
                 // GIT-TODO: ImGui::TableSetupScrollFreeze(0, 1);
 				// GIT-TODO: ImGui::TableHeadersRow();
-				ImGui::TableAutoHeaders();
+				//CRAIG ImGui::TableAutoHeaders();
 
 				// sort
 				// GIT-TODO: 
 				if (const ImGuiTableSortSpecs* sortSpecs = ImGui::TableGetSortSpecs()) {
-                    if (sortSpecs->SpecsChanged) {
+					if (sortSpecs->SpecsDirty) {
 						m_sortContent(sortSpecs->Specs->ColumnUserID, sortSpecs->Specs->SortDirection);
                     }
 				}
@@ -1283,7 +1286,7 @@ namespace ifd {
 		
 		ImGui::PushStyleColor(ImGuiCol_Button, 0);
 		if (noBackHistory) ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-		if (ImGui::ArrowButtonEx("##back", ImGuiDir_Left, ImVec2(GUI_ELEMENT_SIZE, GUI_ELEMENT_SIZE), m_backHistory.empty() * ImGuiButtonFlags_Disabled)) {
+		if (ImGui::ArrowButtonEx("##back", ImGuiDir_Left, ImVec2(GUI_ELEMENT_SIZE, GUI_ELEMENT_SIZE), 0)){ //CRAIG m_backHistory.empty() * ImGuiButtonFlags_Disabled)) {
 			std::filesystem::path newPath = m_backHistory.top();
 			m_backHistory.pop();
 			m_forwardHistory.push(m_currentDirectory);
@@ -1294,7 +1297,7 @@ namespace ifd {
 		ImGui::SameLine();
 		
 		if (noForwardHistory) ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-		if (ImGui::ArrowButtonEx("##forward", ImGuiDir_Right, ImVec2(GUI_ELEMENT_SIZE, GUI_ELEMENT_SIZE), m_forwardHistory.empty() * ImGuiButtonFlags_Disabled)) {
+		if (ImGui::ArrowButtonEx("##forward", ImGuiDir_Right, ImVec2(GUI_ELEMENT_SIZE, GUI_ELEMENT_SIZE), 0)){ //CRAIG m_forwardHistory.empty() * ImGuiButtonFlags_Disabled)) {
 			std::filesystem::path newPath = m_forwardHistory.top();
 			m_forwardHistory.pop();
 			m_backHistory.push(m_currentDirectory);

@@ -397,11 +397,11 @@ namespace ed {
 		ImGui::SameLine();
 		float xExtPos = ImGui::GetCursorPosX();
 		static char hlslExtEntry[64] = { 0 };
-		if (ImGui::ListBoxHeader("##optg_hlslexts", ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
+		if (ImGui::BeginListBox("##optg_hlslexts", ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
 			for (auto& ext : settings->General.HLSLExtensions)
 				if (ImGui::Selectable(ext.c_str()))
 					strcpy(hlslExtEntry, ext.c_str());
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 		ImGui::SetCursorPosX(xExtPos);
 		ImGui::PushItemWidth(settings->CalculateSize(100));
@@ -434,11 +434,11 @@ namespace ed {
 		ImGui::SameLine();
 		xExtPos = ImGui::GetCursorPosX();
 		static char vkExtEntry[64] = { 0 };
-		if (ImGui::ListBoxHeader("##optg_vkexts", ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
+		if (ImGui::BeginListBox("##optg_vkexts", ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
 			for (auto& ext : settings->General.VulkanGLSLExtensions)
 				if (ImGui::Selectable(ext.c_str()))
 					strcpy(vkExtEntry, ext.c_str());
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 		ImGui::SetCursorPosX(xExtPos);
 		ImGui::PushItemWidth(settings->CalculateSize(100));
@@ -477,11 +477,11 @@ namespace ed {
 				ImGui::SameLine();
 				xExtPos = ImGui::GetCursorPosX();
 				static char plExtEntry[64] = { 0 };
-				if (ImGui::ListBoxHeader(("##optg_" + langName + "exts").c_str(), ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
+				if (ImGui::BeginListBox(("##optg_" + langName + "exts").c_str(), ImVec2(settings->CalculateSize(100), settings->CalculateSize(100)))) {
 					for (auto& ext : extVec)
 						if (ImGui::Selectable(ext.c_str()))
 							strcpy(plExtEntry, ext.c_str());
-					ImGui::ListBoxFooter();
+					ImGui::EndListBox();
 				}
 				ImGui::SetCursorPosX(xExtPos);
 				ImGui::PushItemWidth(settings->CalculateSize(100));
@@ -775,7 +775,7 @@ namespace ed {
 					m_selectedShortcut = -1;
 			} else {
 				if (ImGui::Button((KeyboardShortcuts::Instance().GetString(names[i]) + "##stcbtn" + names[i]).c_str(), ImVec2(-1, 0))) {
-					if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
+					if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl))
 						KeyboardShortcuts::Instance().Remove(names[i]);
 					else {
 						m_selectedShortcut = i;
@@ -1024,11 +1024,11 @@ namespace ed {
 		ImGui::SameLine();
 		ImGui::Indent(settings->CalculateSize(150));
 		static char ipathEntry[SHADERED_MAX_PATH] = { 0 };
-		if (ImGui::ListBoxHeader("##optpr_ipaths", ImVec2(0, settings->CalculateSize(250)))) {
+		if (ImGui::BeginListBox("##optpr_ipaths", ImVec2(0, settings->CalculateSize(250)))) {
 			for (auto& ext : settings->Project.IncludePaths)
 				if (ImGui::Selectable(ext.c_str()))
 					strcpy(ipathEntry, ext.c_str());
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 		ImGui::PushItemWidth(settings->CalculateSize(-125));
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
@@ -1061,7 +1061,7 @@ namespace ed {
 			ImGui::TableSetupColumn("Display", ImGuiTableColumnFlags_WidthFixed);
 			ImGui::TableSetupColumn("Search", ImGuiTableColumnFlags_WidthFixed);
 			ImGui::TableSetupColumn("Snippet", ImGuiTableColumnFlags_WidthStretch);
-			ImGui::TableAutoHeaders();
+			// CRAIG ImGui::TableAutoHeaders();
 
 			int rowIndex = 0;
 			for (const auto& snippet : snippets) {
@@ -1094,7 +1094,7 @@ namespace ed {
 			ImGui::TableSetupColumn("Search", ImGuiTableColumnFlags_WidthFixed);
 			ImGui::TableSetupColumn("Snippet", ImGuiTableColumnFlags_WidthStretch);
 			ImGui::TableSetupColumn("Controls", ImGuiTableColumnFlags_WidthFixed);
-			ImGui::TableAutoHeaders();
+			// CRAIG ImGui::TableAutoHeaders();
 
 				ImGui::TableNextRow();
 

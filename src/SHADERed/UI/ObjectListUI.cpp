@@ -21,7 +21,7 @@ namespace ed {
 	}
 	void ObjectListUI::Update(float delta)
 	{
-		ImVec2 containerSize = ImVec2(ImGui::GetWindowContentRegionWidth(), abs(ImGui::GetWindowContentRegionMax().y - ImGui::GetWindowContentRegionMin().y));
+		ImVec2 containerSize = ImVec2(/*CRAIG ImGui::GetWindowContentRegionWidth()*/ ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x, abs(ImGui::GetWindowContentRegionMax().y - ImGui::GetWindowContentRegionMin().y));
 		bool itemMenuOpened = false;
 		std::vector<ObjectManagerItem*>& items = m_data->Objects.GetObjects();
 		const std::vector<PipelineItem*>& passes = m_data->Pipeline.GetList();
